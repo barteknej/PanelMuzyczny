@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel Muzyczny</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'poppins': ['Poppins', 'sans-serif']
+          },
+          animation: { 
+            'gradient': 'gradient 15s ease infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          },
+          keyframes: {
+            gradient: {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            }
+          },
+          scale: { '102': '1.02' }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-size: 400% 400%;
+    }
+
+    .glass-card {
+      backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(17, 25, 40, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.125);
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 600ms linear;
+      background-color: rgba(255, 255, 255, 0.2);
+      pointer-events: none;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .tab-btn, .card {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #22c55e;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #16a34a;
+    }
+
+    .animated-bg {
+      background: linear-gradient(-45deg, #1DB954, #191414, #1ed760, #535353);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+
+    .hover-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body class="min-h-screen animated-bg text-white flex flex-col items-center p-8 font-poppins">
+  
+  <div class="mb-12 text-center animate-float">
+    <div class="flex items-center justify-center mb-4">
+      <svg class="w-12 h-12 text-green-500 mr-3" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+      </svg>
+      <h1 class="text-5xl font-bold bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
+        Panel Muzyczny
+      </h1>
+    </div>
+    <p class="text-gray-300 text-lg">Twoja ulubiona muzyka ze Spotify</p>
+    <p class="text-gray-300 text-lg">oraz rekomendacje z serwisu Last.fm </p>
+  </div>
+
+  <div id="auth-container" class="mt-4">
+    <button id="login-btn" class="glass-effect transform hover:scale-105 transition-all duration-300 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold py-4 px-10 rounded-full shadow-lg hover:shadow-green-500/25">
+      <span class="flex items-center text-lg">
+        <svg class="w-7 h-7 mr-3" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+        Zaloguj się
+      </span>
+    </button>
+  </div>
+
+  <div id="main-container" class="hidden w-full max-w-7xl mt-10">
+
+    <div class="flex justify-center gap-6 mb-10">
+      <button id="tracks-btn" class="tab-btn glass-effect transform hover:scale-105 transition-all duration-300 bg-gradient-to-r from-green-500/80 to-green-600/80 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-green-500/25" data-type="tracks">
+        <span class="flex items-center text-lg">
+          <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          Ulubione utwory
+        </span>
+      </button>
+      <button id="artists-btn" class="tab-btn glass-effect transform hover:scale-105 transition-all duration-300 bg-gradient-to-r from-green-500/80 to-green-600/80 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-green-500/25" data-type="artists">
+        <span class="flex items-center text-lg">
+          <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+          Ulubieni artyści
+        </span>
+      </button>
+      <button id="genres-btn" class="tab-btn glass-effect transform hover:scale-105 transition-all duration-300 bg-gradient-to-r from-green-500/80 to-green-600/80 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-green-500/25" data-type="genres">
+        <span class="flex items-center text-lg">
+          <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          Ulubione gatunki
+        </span>
+      </button>
+    </div>
+
+    <div class="flex flex-col md:flex-row w-full gap-8">
+      <div id="left-content" class="space-y-4 w-full md:w-1/2 glass-card p-8 rounded-2xl shadow-xl"></div>
+      <div id="right-content" class="space-y-4 w-full md:w-1/2 glass-card p-8 rounded-2xl shadow-xl"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
