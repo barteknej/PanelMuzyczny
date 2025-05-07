@@ -1,4 +1,4 @@
-Panel Muczny
+Panel Muzyczny
 
 Przeglądarkowa aplikacja umożliwiająca przegląd ulubionych utworów, artystów oraz gatunków a także rekomendacji do nich.
 
