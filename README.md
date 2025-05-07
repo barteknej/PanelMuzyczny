@@ -1,4 +1,5 @@
 Panel Muczny
+
 Przeglądarkowa aplikacja umożliwiająca przegląd ulubionych utworów, artystów oraz gatunków a także rekomendacji do nich.
 
 Aplikacja używa API Spotify oraz Last.fm
