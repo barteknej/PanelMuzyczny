@@ -9,6 +9,7 @@ LAST.FM API
 https://www.last.fm/api 
 
 Instukcja uruchomienia aplikacji
+
 1.Uruchom kod w Visual Studio Code oraz zainstaluj wtyczkę Live Server.
 
 2. Zaloguj się na stronie z API Spotify, stwórz clientId, clientSecret, skopiuj go i wklej do oznaczonego miejsca w kodzie w pliku app.js.
